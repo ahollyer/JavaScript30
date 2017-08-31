@@ -31,28 +31,138 @@
 
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    const fifteens = inventors.filter(function(inventor) {
+      if(inventor.year >= 1500 && inventor.year < 1600) {
+        return true; // keep it!
+      } // no need for else, return false bc if you don't return a truthy
+        // value, the element will be tossed out
+    });
+    console.table(fifteens);
+
+    // Use fat arrow function & return boolean expression directly rather than
+    // creating if block
+    const betterFif = inventors.filter(inventor => {
+      return inventor.year >= 1500 && inventor.year < 1600;
+    });
+    console.table(betterFif);
+
+    // Remove unnecessary return and brackets
+    const bestFif = inventors.filter(inventor => inventor.year >= 1500 && inventor.year < 1600);
+    console.table(bestFif);
+
+
+
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors' first and last names
+    const fullNames = inventors.map(function(inventor) {
+      return inventor.first + ' ' + inventor.last;
+    });
+    console.log(fullNames);
+
+    // Shorten with arrow function
+    const betterNames = inventors.map(inv => `${inv.first} ${inv.last}`);
+    console.log(betterNames);
+
+
+
+
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    const ordered = inventors.sort(function(a, b) {
+      if(a.year > b.year) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
+    console.table(ordered);
+
+    // Shorten if/else block with ternary operator, arrow function
+    const betterOrd = inventors.sort((a, b) => a.year > b.year ? 1 : -1);
+    console.table(betterOrd);
+
+
+
+
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
 
+    // Reduce is useful for code patterns where you would use an
+    // accumulator variable, e.g.
+    // var totalYears = 0
+    // for(.....) {totalYears += .....}
+
+    const years = inventors.reduce((total, inventor) => {
+      return total + (inventor.passed - inventor.year);
+    }, 0);
+    // total = undefined the first time around, so we pass 0 as the second
+    // argument, so it's our accumulator the first time through
+    console.log(years);
+
+
+
+
+
     // 5. Sort the inventors by years lived
+    const oldest = inventors.sort((a, b) => {
+      if(a.passed - a.year > b.passed - b.year) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+    console.table(oldest);
+
+    const betterOldest = inventors.sort((a, b) => {
+      const aAge = a.passed - a.year;
+      const bAge = b.passed - b.year;
+      return aAge > bAge ? -1 : 1;
+    });
+    console.table(betterOldest);
+
+
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+    // (has to be done in console)
+    // const category = document.querySelector('.mw-category');
+    // // Have to convert NodeList to array to use .map
+    // const links = Array.from(category.querySelectorAll('a'));
+    // // OR spread operator:
+    // // const links = [...category.querySelectorAll('a')];
+    // const de = links
+    //             .map(link => link.textContent)
+    //             .filter(text => text.includes('de'));
 
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    const alphaOrder = people.sort((a, b) => {
+      const [aLast, aFirst] = a.split(', ');
+      const [bLast, bFirst] = b.split(', ');
+      return aLast > bLast ? 1 : -1;
+    });
+    console.log(alphaOrder);
+
+
+
+
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+    const sums = data.reduce(function(obj, item) {
+      if(!obj[item]) {
+        obj[item] = 0;
+      }
+      obj[item]++;
+      return obj;
+    }, {});
+    console.log(sums);
 
   </script>
 </body>
